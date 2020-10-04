@@ -7,3 +7,75 @@
   *
 */
 
+* {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  background-color: rgb(39, 39, 39);
+}
+
+h1 {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+header, h2 {
+  color: snow;
+  text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+h3 {
+  text-align: center;
+  padding: 12px;
+  font-size: 26px;
+}
+
+p {
+  text-align: center;
+  font-size: 20px;
+}
+
+.correctAnswer, .wrongAnswer {
+  border: solid 2px;
+}
+
+.correctAnswer {
+  border-color: greenyellow;
+}
+
+.wrongAnswer {
+  border-color: firebrick;
+}
+
+.correctAnswer > p, .wrongAnswer > p {
+  text-align: left;
+  
+  margin: 0px 20px;
+  padding: 8px 20px;
+}
+
+section {
+  background-color: rgba(245, 245, 245, 0.719);
+  margin: 40px;
+  border-radius: 10px;
+}
+
+ul {
+  list-style: none;
+  padding-right: 40px;
+}
+li{
+  margin: 10px;
+  padding: 10px;
+}
+label {
+  font-size: 20px;
+}
+
+.form-buttons, .start-button, .end-button {
+  text-align: center;
+  padding: 12px;
+}
+

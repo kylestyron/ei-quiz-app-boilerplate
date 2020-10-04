@@ -75,43 +75,54 @@ const STORE = {
 
 // These functions return HTML templates
 function getQuiz() {
-  return `<section>
+  return `
+  <div class="question-head">
     <h2 class="question-number">Question #${STORE.questionNumber + 1}</h2>
-      <h3 class="ask-question">${STORE.questions[STORE.questionNumber].question}</h3>
-        <form>
-          <ul class="answers">
-            <li>
-              <label><input type="radio" name="answer" tabindex="1" value="${STORE.questions[STORE.questionNumber].answers[0]}" required> ${STORE.questions[STORE.questionNumber].answers[0]}</label>
-            </li>
-            <li>
-              <label><input type="radio" name="answer" tabindex="2" value="${STORE.questions[STORE.questionNumber].answers[1]}" required> ${STORE.questions[STORE.questionNumber].answers[1]}</label>
-            </li>
-            <li>
-              <label><input type="radio" name="answer" tabindex="3" value="${STORE.questions[STORE.questionNumber].answers[2]}" required> ${STORE.questions[STORE.questionNumber].answers[2]}</label>
-            </li>
-            <li>
-              <label><input type="radio" name="answer" tabindex="4" value="${STORE.questions[STORE.questionNumber].answers[3]}" required> ${STORE.questions[STORE.questionNumber].answers[3]}</label>
-            </li>
-          </ul>
-          <button id="submit-button" type="submit">Submit</button>
-          <button id="next-button" type="button" style="display : none">Next</button>
-        </form>
-      <p class="number-correct">Score: ${STORE.score}/5</p>
-    </section>`;
+  </div>
+  <section>
+  <form>
+  <h3 class="ask-question">${STORE.questions[STORE.questionNumber].question}</h3>
+    <ul class="answers">
+      <li>
+        <label for="answer"><input type="radio" name="answer" tabindex="1" value="${STORE.questions[STORE.questionNumber].answers[0]}" required> ${STORE.questions[STORE.questionNumber].answers[0]}</label>
+      </li>
+      <li>
+        <label for="answer"><input type="radio" name="answer" tabindex="2" value="${STORE.questions[STORE.questionNumber].answers[1]}" required> ${STORE.questions[STORE.questionNumber].answers[1]}</label> 
+      </li>
+      <li>
+        <label for="answer"><input type="radio" name="answer" tabindex="3" value="${STORE.questions[STORE.questionNumber].answers[2]}" required> ${STORE.questions[STORE.questionNumber].answers[2]}</label>
+      </li>
+      <li>
+        <label for="answer"><input type="radio" name="answer" tabindex="4" value="${STORE.questions[STORE.questionNumber].answers[3]}" required> ${STORE.questions[STORE.questionNumber].answers[3]}</label>
+      </li>
+    </ul>
+    <div class="form-buttons">
+      <button id="submit-button" type="submit">Submit</button>
+      <button id="next-button" type="button" style="display : none">Next</button>
+    </div>
+  </form>
+  <p class="number-correct">Score: ${STORE.score}/5</p>
+  </section>`;
 };
 
 function getStartScene() {
-  return `<section class="start">
-    <h3 class="quiz-topic">This is a quiz that test some basic knowledge about bass guitars!</h2>
+  return `
+    <section class="start">
+    <h3 class="quiz-topic">This is a quiz that tests some basic knowledge about bass guitars!</h2>
     <p>Click the Start button to begin!</p>
-    <button id="quiz-start" name="quiz-starter" value="s">Start</button>
+    <div class="start-button">
+      <button id="quiz-start" name="quiz-starter" value="s">Start</button>
+    </div>
   </section>`;
 };
 
 function getEndScene() {
-  return `<section class="end">
+  return `
+    <section class="end">
     <h3 class="score">Your final score was ${STORE.score}/5</h2>
-    <button id="restart" name="quiz-reset" value="r">Restart?</button>
+    <div class="end-button">
+      <button id="restart" name="quiz-reset" value="r">Restart?</button>
+    </div>
   </section>`;
 };
 
