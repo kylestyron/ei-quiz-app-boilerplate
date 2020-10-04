@@ -1,1 +1,1 @@
-### Boilerplate app structure for Quiz App project
+### Quiz app about Bass Guitars
