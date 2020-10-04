@@ -76,40 +76,42 @@ const STORE = {
 // These functions return HTML templates
 function getQuiz() {
   return `<section>
-    <h2 class="question-number">${STORE.questionNumber}</h2>
-      <h3 class="ask-question">${STORE.questions[questionNumber].question}</h3>
+    <h2 class="question-number">Question #${STORE.questionNumber + 1}</h2>
+      <h3 class="ask-question">${STORE.questions[STORE.questionNumber].question}</h3>
         <form>
           <ul class="answers">
             <li>
-              <input type="radio" name="answer" value="A">${STORE.questions[questionNumber].answers[0]}
+              <label><input type="radio" name="answer" tabindex="1" value="${STORE.questions[STORE.questionNumber].answers[0]}" required> ${STORE.questions[STORE.questionNumber].answers[0]}</label>
             </li>
             <li>
-              <input type="radio" name="answer" value="B">${STORE.questions[questionNumber].answers[1]}
+              <label><input type="radio" name="answer" tabindex="2" value="${STORE.questions[STORE.questionNumber].answers[1]}" required> ${STORE.questions[STORE.questionNumber].answers[1]}</label>
             </li>
             <li>
-              <input type="radio" name="answer" value="C">${STORE.questions[questionNumber].answers[2]}
+              <label><input type="radio" name="answer" tabindex="3" value="${STORE.questions[STORE.questionNumber].answers[2]}" required> ${STORE.questions[STORE.questionNumber].answers[2]}</label>
             </li>
             <li>
-              <input type="radio" name="answer" value="D">${STORE.questions[questionNumber].answers[3]}
+              <label><input type="radio" name="answer" tabindex="4" value="${STORE.questions[STORE.questionNumber].answers[3]}" required> ${STORE.questions[STORE.questionNumber].answers[3]}</label>
             </li>
           </ul>
-          <button type="submit">Submit</button>
+          <button id="submit-button" type="submit">Submit</button>
+          <button id="next-button" type="button" style="display : none">Next</button>
         </form>
-      <p class="number-correct">${STORE.score}/5</p>
+      <p class="number-correct">Score: ${STORE.score}/5</p>
     </section>`;
 };
 
 function getStartScene() {
-  return `<section>
-    <h3 class="quiz-topic">This is the topic of the quiz</h2>
-    <button name="quiz-start" value="start">Start!</button>
+  return `<section class="start">
+    <h3 class="quiz-topic">This is a quiz that test some basic knowledge about bass guitars!</h2>
+    <p>Click the Start button to begin!</p>
+    <button id="quiz-start" name="quiz-starter" value="s">Start</button>
   </section>`;
 };
 
 function getEndScene() {
-  return `<section>
+  return `<section class="end">
     <h3 class="score">Your final score was ${STORE.score}/5</h2>
-    <button name="quiz-reset" value="restart">Restart?</button>
+    <button id="restart" name="quiz-reset" value="r">Restart?</button>
   </section>`;
 };
 
@@ -117,30 +119,74 @@ function getEndScene() {
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 function updatePage() {
+  console.log('`updatePage` ran');
   if(STORE.quizStarted && STORE.questionNumber > 4){
     //update main html to getEndScene()
+    $('main').html(getEndScene());
   }
   else if(STORE.quizStarted) {
     //update main html to getQuiz()
+    $('main').html(getQuiz());
   }
   else {
     //update main html to getStartScene()
+    $('main').html(getStartScene());
   }
 };
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
-function handleSumbit(){
+function handleSubmit() {
   //handle answer submissions to increment score and advance to next question
+  console.log('`handleSubmit` ran');
+  $('main').submit( event => {
+    event.preventDefault();
+    
+    var answer = $('input[name="answer"]:checked').val();
+    var isCorrect = (answer === STORE.questions[STORE.questionNumber].correctAnswer);
+    
+    if(isCorrect) {
+      //congratulate
+      STORE.score++;
+    }
+    else {
+      //show correct answer
+    }
+    $('input').attr('disabled', true);
+    $('#submit-button').css('display', 'none');  
+    $('#next-button').css('display', 'inline-block');
+  });
+};
+
+function handleNext() {
+  console.log('`handleNext` ran');
+  $('main').on('click', '#next-button', event => {
+    STORE.questionNumber += 1; 
+    updatePage();
+  });
 };
 
 function handleClick() {
   //handle button clicks to start and restart quiz
+  console.log('`handleClick()` ran');
+  $('main').on('click', '#restart', function(event) {
+    STORE.quizStarted = false;
+    STORE.score = 0;
+    STORE.questionNumber = 0;
+    updatePage();
+    });
+
+  $('main').on('click', '#quiz-start', function(event) {
+    STORE.quizStarted = true;
+    updatePage();
+  });
+  
 };
 
 function handleQuizApp() {
   handleClick();
+  handleNext();
   handleSubmit();
   updatePage();
 }
