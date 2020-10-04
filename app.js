@@ -115,6 +115,18 @@ function getEndScene() {
   </section>`;
 };
 
+function getCorrectAnswer() {
+  return `<div class="correctAnswer">
+  <p>Correct!</p>
+  </div>`;
+}
+
+function getWrongAnswer() {
+  return `<div class="wrongAnswer">
+  <p>Sorry, that is incorrect. The correct answer is: ${STORE.questions[STORE.questionNumber].correctAnswer}</p>
+  </div>`;
+}
+
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
@@ -143,15 +155,15 @@ function handleSubmit() {
   $('main').submit( event => {
     event.preventDefault();
     
-    var answer = $('input[name="answer"]:checked').val();
-    var isCorrect = (answer === STORE.questions[STORE.questionNumber].correctAnswer);
+    var $answer = $('input[name="answer"]:checked');
+    var isCorrect = ($answer.val() === STORE.questions[STORE.questionNumber].correctAnswer);
     
     if(isCorrect) {
-      //congratulate
+      $answer.closest('li').after(getCorrectAnswer());
       STORE.score++;
     }
     else {
-      //show correct answer
+      $answer.closest('li').after(getWrongAnswer());
     }
     $('input').attr('disabled', true);
     $('#submit-button').css('display', 'none');  
